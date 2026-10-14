@@ -1,0 +1,858 @@
+<!DOCTYPE html>
+<html lang="zh-TW" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Starbucks 星巴克 | 兼具人文溫度與生活風格的精品咖啡體驗</title>
+    <!-- Tailwind CSS via CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;700;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        sbGreen: '#006241',
+                        sbDarkGreen: '#1E3932',
+                        sbLightGreen: '#008248',
+                        sbCream: '#F2F0EB',
+                        sbGold: '#CBA258',
+                        sbWarmWhite: '#FAF9F6',
+                        sbTextDark: '#212529',
+                    },
+                    fontFamily: {
+                        serif: ['"Noto Serif TC"', 'serif'],
+                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+                    },
+                    animation: {
+                        'gradient-text': 'gradientText 6s ease infinite',
+                        'pulse-glow': 'pulseGlow 2.5s infinite',
+                        'float': 'float 4s ease-in-out infinite',
+                    },
+                    keyframes: {
+                        gradientText: {
+                            '0%, 100%': { 'background-size': '200% 200%', 'background-position': 'left center' },
+                            '50%': { 'background-size': '200% 200%', 'background-position': 'right center' }
+                        },
+                        pulseGlow: {
+                            '0%, 100%': { opacity: 1, filter: 'drop-shadow(0 0 8px rgba(203, 162, 88, 0.6))' },
+                            '50%': { opacity: 0.85, filter: 'drop-shadow(0 0 18px rgba(203, 162, 88, 0.9))' }
+                        },
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0px)' },
+                            '50%': { transform: 'translateY(-10px)' }
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Custom Text Animation Styles */
+        /* Text Animation 1: Gradient Shift & Typing Glow */
+        .animated-gradient-title {
+            background: linear-gradient(135deg, #FAF9F6 0%, #CBA258 50%, #82C496 100%);
+            background-size: 200% auto;
+            color: transparent;
+            -webkit-background-clip: text;
+            background-clip: text;
+            animation: gradientText 5s linear infinite;
+        }
+
+        /* Text Animation 2: Letter Spacing Expand & Glow on Hover */
+        .expand-glow-text {
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            display: inline-block;
+        }
+        .expand-glow-text:hover {
+            letter-spacing: 0.15em;
+            text-shadow: 0 0 12px rgba(203, 162, 88, 0.8), 0 0 24px rgba(0, 98, 65, 0.4);
+            color: #CBA258;
+        }
+
+        /* Text Animation 3: Scroll Reveal Fade & Slide */
+        .reveal-on-scroll {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .reveal-on-scroll.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Custom Button Animations */
+        /* Button Style 1: Ripple Fill Expansion */
+        .btn-ripple {
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+            transition: color 0.4s ease;
+        }
+        .btn-ripple::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 300%;
+            height: 300%;
+            background: #CBA258;
+            border-radius: 50%;
+            transform: translate(-50%, -50%) scale(0);
+            transition: transform 0.6s cubic-bezier(0.19, 1, 0.22, 1);
+            z-index: -1;
+        }
+        .btn-ripple:hover::before {
+            transform: translate(-50%, -50%) scale(1);
+        }
+
+        /* Button Style 2: Glowing Border Outline with 3D Lift */
+        .btn-glow-outline {
+            position: relative;
+            background: transparent;
+            border: 2px solid #CBA258;
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        .btn-glow-outline:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 25px -5px rgba(203, 162, 88, 0.5), 0 0 15px rgba(203, 162, 88, 0.3);
+            background-color: rgba(203, 162, 88, 0.1);
+            border-color: #FAF9F6;
+        }
+
+        /* Button Style 3: Arrow Slide Indicator */
+        .btn-arrow-slide {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s ease;
+        }
+        .btn-arrow-slide .arrow-icon {
+            transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        .btn-arrow-slide:hover {
+            letter-spacing: 0.05em;
+        }
+        .btn-arrow-slide:hover .arrow-icon {
+            transform: translateX(8px);
+        }
+
+        /* Glassmorphism utility */
+        .glass-nav {
+            background: rgba(30, 57, 50, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* Typewriter Cursor Effect */
+        .typing-cursor::after {
+            content: '|';
+            animation: blink 1s infinite;
+        }
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+    </style>
+</head>
+<body class="bg-sbCream text-sbTextDark font-sans antialiased selection:bg-sbGreen selection:text-white">
+
+    <!-- Navigation Bar -->
+    <header class="fixed top-0 left-0 w-full z-50 glass-nav transition-all duration-300" id="navbar">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            <!-- Starbucks Siren Logo Brand -->
+            <a href="#" class="flex items-center gap-3 group">
+                <div class="w-12 h-12 rounded-full bg-sbGreen flex items-center justify-center shadow-lg group-hover:scale-105 transition-transform duration-300">
+                    <svg class="w-8 h-8 fill-white" viewBox="0 0 100 100">
+                        <path d="M50,2 A48,48 0 1,0 50,98 A48,48 0 1,0 50,2 Z" fill="#006241"/>
+                        <circle cx="50" cy="50" r="42" fill="none" stroke="#FAF9F6" stroke-width="2"/>
+                        <path d="M50,15 L53,24 L62,24 L55,29 L58,38 L50,33 L42,38 L45,29 L38,24 L47,24 Z" fill="#CBA258"/>
+                        <path d="M35,60 C40,52 60,52 65,60 C60,75 40,75 35,60 Z" fill="#FAF9F6"/>
+                        <circle cx="43" cy="56" r="2.5" fill="#1E3932"/>
+                        <circle cx="57" cy="56" r="2.5" fill="#1E3932"/>
+                        <path d="M46,64 Q50,68 54,64" fill="none" stroke="#1E3932" stroke-width="2" stroke-linecap="round"/>
+                    </svg>
+                </div>
+                <div class="flex flex-col">
+                    <span class="text-white font-black tracking-widest text-lg font-serif">STARBUCKS</span>
+                    <span class="text-sbGold text-xs tracking-wider">星巴克</span>
+                </div>
+            </a>
+
+            <!-- Desktop Nav Links -->
+            <nav class="hidden md:flex items-center space-x-8 text-sm font-medium text-white/90">
+                <a href="#hero" class="hover:text-sbGold transition-colors py-2">首頁</a>
+                <a href="#story" class="hover:text-sbGold transition-colors py-2">品牌起源</a>
+                <a href="#values" class="hover:text-sbGold transition-colors py-2">核心價值</a>
+                <a href="#products" class="hover:text-sbGold transition-colors py-2">精選產品</a>
+                <a href="#features" class="hover:text-sbGold transition-colors py-2">五感體驗</a>
+                <a href="#contact" class="hover:text-sbGold transition-colors py-2">門市與會員</a>
+            </nav>
+
+            <!-- CTA Button -->
+            <div class="hidden sm:block">
+                <a href="#contact" class="btn-ripple bg-sbGold text-sbDarkGreen font-bold px-5 py-2.5 rounded-full text-sm inline-block shadow-md">
+                    尋找門市 <i class="fa-solid fa-location-dot ml-1"></i>
+                </a>
+            </div>
+
+            <!-- Mobile Hamburger Button -->
+            <button id="menu-btn" class="md:hidden text-white text-2xl focus:outline-none" aria-label="Open Menu">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+        </div>
+
+        <!-- Mobile Navigation Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-sbDarkGreen border-b border-white/10 px-6 py-6 space-y-4">
+            <a href="#hero" class="block text-white hover:text-sbGold py-2 border-b border-white/5">首頁</a>
+            <a href="#story" class="block text-white hover:text-sbGold py-2 border-b border-white/5">品牌起源</a>
+            <a href="#values" class="block text-white hover:text-sbGold py-2 border-b border-white/5">核心價值</a>
+            <a href="#products" class="block text-white hover:text-sbGold py-2 border-b border-white/5">精選產品</a>
+            <a href="#features" class="block text-white hover:text-sbGold py-2 border-b border-white/5">五感體驗</a>
+            <a href="#contact" class="block text-sbGold font-bold py-2">尋找門市 / 加入會員</a>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="hero" class="relative min-h-screen bg-sbDarkGreen text-white flex items-center pt-24 pb-16 overflow-hidden">
+        <!-- Background Ambient Glow & SVG Patterns -->
+        <div class="absolute inset-0 opacity-20 bg-[radial-gradient(#CBA258_1px,transparent_1px)] [background-size:24px_24px]"></div>
+        <div class="absolute -top-24 -right-24 w-96 h-96 bg-sbGreen rounded-full filter blur-3xl opacity-50"></div>
+        <div class="absolute -bottom-24 -left-24 w-96 h-96 bg-sbGold rounded-full filter blur-3xl opacity-20"></div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+            <!-- Left Text Content -->
+            <div class="lg:col-span-7 space-y-8">
+                <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 backdrop-blur-md border border-white/15 text-sbGold text-xs font-bold tracking-widest uppercase">
+                    <span class="w-2 h-2 rounded-full bg-sbGold animate-ping"></span>
+                    The Starbucks Experience
+                </div>
+
+                <!-- ANIMATION 1: Gradient Shift & Dynamic Typewriter Subtitle -->
+                <h1 class="text-3xl sm:text-5xl lg:text-6xl font-black font-serif leading-tight tracking-wide">
+                    每一杯咖啡，<br>
+                    都是一段<span class="animated-gradient-title">溫暖的人文連結</span>
+                </h1>
+
+                <!-- Brand Statement Quote Card -->
+                <div class="p-6 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-md relative shadow-2xl">
+                    <i class="fa-solid fa-quote-left text-sbGold text-3xl opacity-40 absolute top-4 left-4"></i>
+                    <p class="text-lg sm:text-xl text-sbCream leading-relaxed font-light pl-6 pt-2 italic">
+                        「我們是一個<strong class="text-sbGold font-semibold">兼具人文溫度與生活風格</strong>的精品咖啡體驗品牌，透過高品質的手作咖啡與舒適美好的<strong class="text-sbGold font-semibold">「第三空間」</strong>，讓每個人都能在日常生活中獲得放鬆、啟發與溫暖的人際連結。」
+                    </p>
+                </div>
+
+                <!-- Dynamic Typewriter Line -->
+                <div class="text-base sm:text-lg font-mono text-sbGold/90 flex items-center gap-2">
+                    <i class="fa-solid fa-mug-hot"></i>
+                    <span id="typewriter" class="typing-cursor font-semibold"></span>
+                </div>
+
+                <!-- Hero Buttons (Style 1 & Style 2) -->
+                <div class="flex flex-wrap gap-4 pt-4">
+                    <!-- Button Style 1: Ripple Fill -->
+                    <a href="#products" class="btn-ripple bg-sbGreen hover:text-sbDarkGreen text-white font-bold px-8 py-4 rounded-full shadow-xl flex items-center gap-3">
+                        <span>探索精選咖啡</span>
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </a>
+
+                    <!-- Button Style 2: Glowing Outline 3D Lift -->
+                    <a href="#story" class="btn-glow-outline text-white font-semibold px-8 py-4 rounded-full flex items-center gap-3">
+                        <i class="fa-solid fa-compass"></i>
+                        <span>了解品牌起源</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Right Visual Graphic -->
+            <div class="lg:col-span-5 flex justify-center relative">
+                <div class="relative w-72 h-72 sm:w-96 sm:h-96 rounded-full bg-gradient-to-tr from-sbGreen to-sbGold/40 p-2 shadow-2xl animate-float">
+                    <div class="w-full h-full rounded-full bg-sbDarkGreen flex flex-col items-center justify-center p-8 text-center relative overflow-hidden border border-white/20">
+                        <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1509042239860-f550ce710b93?auto=format&fit=crop&q=80')] bg-cover bg-center opacity-30 mix-blend-overlay"></div>
+                        <i class="fa-solid fa-mug-saucer text-6xl text-sbGold mb-4 drop-shadow-md"></i>
+                        <span class="font-serif text-2xl font-bold text-white mb-1">THE THIRD PLACE</span>
+                        <span class="text-xs text-sbCream tracking-widest uppercase mb-4">家與工作場所之外的避風港</span>
+                        <div class="w-16 h-0.5 bg-sbGold my-2"></div>
+                        <span class="text-xs text-white/80 font-light">Est. 1971 Seattle, WA</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Brand Story & Origins Section -->
+    <section id="story" class="py-24 bg-sbWarmWhite relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <!-- Section Header (TEXT ANIMATION 2 & 3 Applied) -->
+            <div class="text-center max-w-3xl mx-auto mb-16 reveal-on-scroll">
+                <span class="text-sbGreen font-bold text-sm tracking-widest uppercase block mb-2">Since 1971</span>
+                <h2 class="text-3xl sm:text-4xl font-serif font-black text-sbDarkGreen">
+                    品牌故事與<span class="expand-glow-text cursor-pointer">經典起源</span>
+                </h2>
+                <div class="w-20 h-1 bg-sbGold mx-auto my-4 rounded-full"></div>
+                <p class="text-gray-600 leading-relaxed">
+                    從西雅圖派克市場的小小咖啡豆專賣店，演變為引領全球咖啡文化的第三空間體驗。
+                </p>
+            </div>
+
+            <!-- Timeline Cards Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 relative">
+                <!-- Timeline Line Connection (Desktop) -->
+                <div class="hidden md:block absolute top-1/2 left-0 w-full h-1 bg-sbGreen/20 -translate-y-1/2 z-0"></div>
+
+                <!-- Story Card 1 -->
+                <div class="reveal-on-scroll bg-white p-8 rounded-3xl shadow-lg border border-gray-100 hover:shadow-2xl transition-all duration-300 relative z-10 group hover:-translate-y-2">
+                    <div class="w-16 h-16 rounded-2xl bg-sbGreen/10 text-sbGreen flex items-center justify-center text-2xl font-black mb-6 group-hover:bg-sbGreen group-hover:text-white transition-colors">
+                        1971
+                    </div>
+                    <h3 class="text-xl font-bold font-serif text-sbDarkGreen mb-3">西雅圖派克市場的誕生</h3>
+                    <p class="text-gray-600 text-sm leading-relaxed mb-4">
+                        三位熱愛咖啡與茶葉的創辦人，於美國西雅圖派克市場開設了第一家星巴克，專注於販售高品質阿拉比卡咖啡豆與專業配備。
+                    </p>
+                    <span class="inline-block text-xs font-semibold text-sbGold bg-sbGold/10 px-3 py-1 rounded-full">
+                        靈感源自《白鯨記》大副 Starbuck
+                    </span>
+                </div>
+
+                <!-- Story Card 2 -->
+                <div class="reveal-on-scroll bg-white p-8 rounded-3xl shadow-lg border border-gray-100 hover:shadow-2xl transition-all duration-300 relative z-10 group hover:-translate-y-2" style="transition-delay: 150ms;">
+                    <div class="w-16 h-16 rounded-2xl bg-sbGold/20 text-sbGold flex items-center justify-center text-2xl font-black mb-6 group-hover:bg-sbGold group-hover:text-sbDarkGreen transition-colors">
+                        1980s
+                    </div>
+                    <h3 class="text-xl font-bold font-serif text-sbDarkGreen mb-3">義式咖啡館與人文啟發</h3>
+                    <p class="text-gray-600 text-sm leading-relaxed mb-4">
+                        霍華·舒茲（Howard Schultz）前往義大利考察，深受米蘭咖啡館濃厚的社區互動與咖啡工藝感動，決定將義式 Espresso 體驗帶回美國。
+                    </p>
+                    <span class="inline-block text-xs font-semibold text-sbGreen bg-sbGreen/10 px-3 py-1 rounded-full">
+                        轉型手作現煮咖啡體驗
+                    </span>
+                </div>
+
+                <!-- Story Card 3 -->
+                <div class="reveal-on-scroll bg-white p-8 rounded-3xl shadow-lg border border-gray-100 hover:shadow-2xl transition-all duration-300 relative z-10 group hover:-translate-y-2" style="transition-delay: 300ms;">
+                    <div class="w-16 h-16 rounded-2xl bg-sbDarkGreen/10 text-sbDarkGreen flex items-center justify-center text-2xl font-black mb-6 group-hover:bg-sbDarkGreen group-hover:text-white transition-colors">
+                        Today
+                    </div>
+                    <h3 class="text-xl font-bold font-serif text-sbDarkGreen mb-3">全球精品咖啡與第三空間</h3>
+                    <p class="text-gray-600 text-sm leading-relaxed mb-4">
+                        如今星巴克已成為全球最大精品咖啡品牌，始終堅持「每一杯咖啡、每一次對話、每一個社區」的溫暖承諾。
+                    </p>
+                    <span class="inline-block text-xs font-semibold text-sbDarkGreen bg-sbDarkGreen/10 px-3 py-1 rounded-full">
+                        全球數萬家溫馨據點
+                    </span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Brand Philosophy & Core Values Section -->
+    <section id="values" class="py-24 bg-sbDarkGreen text-white relative overflow-hidden">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <!-- Header -->
+            <div class="text-center max-w-3xl mx-auto mb-16 reveal-on-scroll">
+                <span class="text-sbGold font-bold text-sm tracking-widest uppercase block mb-2">Our Core Values</span>
+                <h2 class="text-3xl sm:text-4xl font-serif font-black">
+                    品牌理念與<span class="expand-glow-text cursor-pointer">四大核心價值</span>
+                </h2>
+                <div class="w-20 h-1 bg-sbGold mx-auto my-4 rounded-full"></div>
+                <p class="text-sbCream/80 text-base">
+                    星巴克不只是賣咖啡，我們以「第三空間」為核心，深耕人際溫度與社會責任。
+                </p>
+            </div>
+
+            <!-- The Third Place Hero Feature -->
+            <div class="reveal-on-scroll bg-white/5 border border-white/10 rounded-3xl p-8 sm:p-12 mb-12 backdrop-blur-lg">
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+                    <div class="lg:col-span-4 text-center lg:text-left">
+                        <div class="inline-block p-4 rounded-2xl bg-sbGold/20 text-sbGold text-3xl mb-4">
+                            <i class="fa-solid fa-house-chimney-window"></i>
+                        </div>
+                        <h3 class="text-2xl font-serif font-bold text-white mb-2">核心概念：第三空間 (The Third Place)</h3>
+                        <p class="text-sbGold font-medium text-sm">介於「家」與「工作場所」之間的避風港</p>
+                    </div>
+                    <div class="lg:col-span-8 text-sbCream/90 leading-relaxed text-sm sm:text-base border-t lg:border-t-0 lg:border-l border-white/10 pt-6 lg:pt-0 lg:pl-8">
+                        我們傾力營造一個充滿包容感與歸屬感的環境。在這裡，您可以獨自享受咖啡香與書籍、與朋友親密交流，或是專注於工作創作。星巴克的環境設計、柔和燈光與爵士樂音，皆為此而生。
+                    </div>
+                </div>
+            </div>
+
+            <!-- 4 Core Values Grid -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- Value 1 -->
+                <div class="reveal-on-scroll p-6 rounded-2xl bg-white/5 border border-white/10 hover:border-sbGold/50 transition-all duration-300 hover:bg-white/10 group">
+                    <div class="w-12 h-12 rounded-xl bg-sbGreen flex items-center justify-center text-xl text-white mb-4 group-hover:scale-110 transition-transform">
+                        <i class="fa-solid fa-handshake"></i>
+                    </div>
+                    <h4 class="text-lg font-bold font-serif mb-2 text-sbGold">人際連結</h4>
+                    <span class="text-xs text-white/60 block mb-3">Human Connection</span>
+                    <p class="text-xs text-sbCream/80 leading-relaxed">
+                        以人為本，透過夥伴（Barista）真誠的問候與杯上的手寫祝福，讓每一杯咖啡成為溫暖對話的開端。
+                    </p>
+                </div>
+
+                <!-- Value 2 -->
+                <div class="reveal-on-scroll p-6 rounded-2xl bg-white/5 border border-white/10 hover:border-sbGold/50 transition-all duration-300 hover:bg-white/10 group" style="transition-delay: 100ms;">
+                    <div class="w-12 h-12 rounded-xl bg-sbGold flex items-center justify-center text-xl text-sbDarkGreen mb-4 group-hover:scale-110 transition-transform">
+                        <i class="fa-solid fa-award"></i>
+                    </div>
+                    <h4 class="text-lg font-bold font-serif mb-2 text-sbGold">品質與工藝</h4>
+                    <span class="text-xs text-white/60 block mb-3">Quality & Craftsmanship</span>
+                    <p class="text-xs text-sbCream/80 leading-relaxed">
+                        嚴選 100% 高品質阿拉比卡咖啡豆，堅持精準烘焙與咖啡師現場手作調配，呈現最完美的風味。
+                    </p>
+                </div>
+
+                <!-- Value 3 -->
+                <div class="reveal-on-scroll p-6 rounded-2xl bg-white/5 border border-white/10 hover:border-sbGold/50 transition-all duration-300 hover:bg-white/10 group" style="transition-delay: 200ms;">
+                    <div class="w-12 h-12 rounded-xl bg-sbGreen flex items-center justify-center text-xl text-white mb-4 group-hover:scale-110 transition-transform">
+                        <i class="fa-solid fa-heart"></i>
+                    </div>
+                    <h4 class="text-lg font-bold font-serif mb-2 text-sbGold">包容與歸屬感</h4>
+                    <span class="text-xs text-white/60 block mb-3">Inclusion & Belonging</span>
+                    <p class="text-xs text-sbCream/80 leading-relaxed">
+                        打造一個歡迎所有人、無分背景的多元包容空間，讓每個人都能找到專屬的自在角落。
+                    </p>
+                </div>
+
+                <!-- Value 4 -->
+                <div class="reveal-on-scroll p-6 rounded-2xl bg-white/5 border border-white/10 hover:border-sbGold/50 transition-all duration-300 hover:bg-white/10 group" style="transition-delay: 300ms;">
+                    <div class="w-12 h-12 rounded-xl bg-sbGold flex items-center justify-center text-xl text-sbDarkGreen mb-4 group-hover:scale-110 transition-transform">
+                        <i class="fa-solid fa-leaf"></i>
+                    </div>
+                    <h4 class="text-lg font-bold font-serif mb-2 text-sbGold">永續與責任</h4>
+                    <span class="text-xs text-white/60 block mb-3">Sustainability</span>
+                    <p class="text-xs text-sbCream/80 leading-relaxed">
+                        推動 C.A.F.E. 道德採購、公平貿易、減塑行動與植物奶推廣，承諾給予地球與社區正向回饋。
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Product Showcase Section -->
+    <section id="products" class="py-24 bg-sbCream relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16 reveal-on-scroll">
+                <span class="text-sbGreen font-bold text-sm tracking-widest uppercase block mb-2">Our Craft & Offerings</span>
+                <h2 class="text-3xl sm:text-4xl font-serif font-black text-sbDarkGreen">
+                    精選咖啡與<span class="expand-glow-text cursor-pointer">核心體驗</span>
+                </h2>
+                <div class="w-20 h-1 bg-sbGold mx-auto my-4 rounded-full"></div>
+                <p class="text-gray-600">
+                    每一款飲品與輕食，都是結合嚴選食材與手作工藝的風味呈現。
+                </p>
+            </div>
+
+            <!-- 3 Products Grid -->
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <!-- Product Card 1 -->
+                <div class="reveal-on-scroll bg-white rounded-3xl overflow-hidden shadow-xl border border-gray-100 hover:shadow-2xl transition-all duration-500 flex flex-col group">
+                    <div class="relative h-64 overflow-hidden bg-sbDarkGreen">
+                        <img src="https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?auto=format&fit=crop&q=80" alt="Handcrafted Espresso" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 opacity-90">
+                        <div class="absolute top-4 left-4 bg-sbGreen/90 backdrop-blur-md text-white text-xs font-bold px-3 py-1 rounded-full">
+                            經典手作
+                        </div>
+                    </div>
+                    <div class="p-8 flex-1 flex flex-col justify-between">
+                        <div>
+                            <h3 class="text-2xl font-serif font-bold text-sbDarkGreen mb-3">經典義式與手沖精選</h3>
+                            <p class="text-gray-600 text-sm leading-relaxed mb-6">
+                                濃郁經典的星巴克拿鐵、卡布奇諾與美式，採用 100% 阿拉比卡咖啡豆。配合 Starbucks Reserve™ 典藏手沖，呈現單一產區的精緻風味脈絡。
+                            </p>
+                            <div class="flex flex-wrap gap-2 mb-6">
+                                <span class="bg-sbCream text-sbDarkGreen text-xs font-semibold px-2.5 py-1 rounded-md">那堤 (Latte)</span>
+                                <span class="bg-sbCream text-sbDarkGreen text-xs font-semibold px-2.5 py-1 rounded-md">冷萃咖啡 (Cold Brew)</span>
+                                <span class="bg-sbCream text-sbDarkGreen text-xs font-semibold px-2.5 py-1 rounded-md">手沖典藏</span>
+                            </div>
+                        </div>
+                        <!-- Button Style 3: Arrow Slide -->
+                        <a href="#contact" class="btn-arrow-slide text-sbGreen font-bold text-sm inline-flex items-center pt-2">
+                            <span>探索咖啡菜單</span>
+                            <i class="fa-solid fa-arrow-right arrow-icon"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Product Card 2 -->
+                <div class="reveal-on-scroll bg-white rounded-3xl overflow-hidden shadow-xl border border-gray-100 hover:shadow-2xl transition-all duration-500 flex flex-col group" style="transition-delay: 150ms;">
+                    <div class="relative h-64 overflow-hidden bg-sbDarkGreen">
+                        <img src="https://images.unsplash.com/photo-1572490122747-3968b75cc699?auto=format&fit=crop&q=80" alt="Frappuccino" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 opacity-90">
+                        <div class="absolute top-4 left-4 bg-sbGold text-sbDarkGreen text-xs font-bold px-3 py-1 rounded-full">
+                            人氣特調
+                        </div>
+                    </div>
+                    <div class="p-8 flex-1 flex flex-col justify-between">
+                        <div>
+                            <h3 class="text-2xl font-serif font-bold text-sbDarkGreen mb-3">星冰樂與季節特調</h3>
+                            <p class="text-gray-600 text-sm leading-relaxed mb-6">
+                                標誌性的 Frappuccino® 星冰樂，將冰爽綿密感與咖啡或抹茶完美融合。搭配隨季節推出的限定風味飲品，為每一天帶來驚喜樂趣。
+                            </p>
+                            <div class="flex flex-wrap gap-2 mb-6">
+                                <span class="bg-sbCream text-sbDarkGreen text-xs font-semibold px-2.5 py-1 rounded-md">摩卡可可碎片</span>
+                                <span class="bg-sbCream text-sbDarkGreen text-xs font-semibold px-2.5 py-1 rounded-md">抹茶星冰樂</span>
+                                <span class="bg-sbCream text-sbDarkGreen text-xs font-semibold px-2.5 py-1 rounded-md">季節限定</span>
+                            </div>
+                        </div>
+                        <!-- Button Style 3: Arrow Slide -->
+                        <a href="#contact" class="btn-arrow-slide text-sbGreen font-bold text-sm inline-flex items-center pt-2">
+                            <span>查看季節新品</span>
+                            <i class="fa-solid fa-arrow-right arrow-icon"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Product Card 3 -->
+                <div class="reveal-on-scroll bg-white rounded-3xl overflow-hidden shadow-xl border border-gray-100 hover:shadow-2xl transition-all duration-500 flex flex-col group" style="transition-delay: 300ms;">
+                    <div class="relative h-64 overflow-hidden bg-sbDarkGreen">
+                        <img src="https://images.unsplash.com/photo-1554118811-1e0d58224f24?auto=format&fit=crop&q=80" alt="Third Place & Food" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 opacity-90">
+                        <div class="absolute top-4 left-4 bg-sbDarkGreen text-white text-xs font-bold px-3 py-1 rounded-full">
+                            空間與輕食
+                        </div>
+                    </div>
+                    <div class="p-8 flex-1 flex flex-col justify-between">
+                        <div>
+                            <h3 class="text-2xl font-serif font-bold text-sbDarkGreen mb-3">第三空間與手作輕食</h3>
+                            <p class="text-gray-600 text-sm leading-relaxed mb-6">
+                                搭配現烤糕點、熱壓三明治與精緻沙拉，提供全天候的味蕾滿足。搭配門市舒適座席與免費高速 Wi-Fi，讓您沉浸於最放鬆的空間氛圍。
+                            </p>
+                            <div class="flex flex-wrap gap-2 mb-6">
+                                <span class="bg-sbCream text-sbDarkGreen text-xs font-semibold px-2.5 py-1 rounded-md">烘焙糕點</span>
+                                <span class="bg-sbCream text-sbDarkGreen text-xs font-semibold px-2.5 py-1 rounded-md">熱壓三明治</span>
+                                <span class="bg-sbCream text-sbDarkGreen text-xs font-semibold px-2.5 py-1 rounded-md">舒適空間</span>
+                            </div>
+                        </div>
+                        <!-- Button Style 3: Arrow Slide -->
+                        <a href="#contact" class="btn-arrow-slide text-sbGreen font-bold text-sm inline-flex items-center pt-2">
+                            <span>了解門市服務</span>
+                            <i class="fa-solid fa-arrow-right arrow-icon"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Brand Features & 4-Questions Interactive Section -->
+    <section id="features" class="py-24 bg-sbWarmWhite border-t border-b border-gray-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <!-- Header -->
+            <div class="text-center max-w-3xl mx-auto mb-16 reveal-on-scroll">
+                <span class="text-sbGreen font-bold text-sm tracking-widest uppercase block mb-2">Brand Identity Grid</span>
+                <h2 class="text-3xl sm:text-4xl font-serif font-black text-sbDarkGreen">
+                    品牌定位與<span class="expand-glow-text cursor-pointer">五感體驗</span>
+                </h2>
+                <div class="w-20 h-1 bg-sbGold mx-auto my-4 rounded-full"></div>
+            </div>
+
+            <!-- 4 Questions Interactive Accordion/Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-16">
+                <!-- Who -->
+                <div class="reveal-on-scroll bg-white p-8 rounded-3xl shadow-sm border border-gray-200 hover:border-sbGreen transition-all">
+                    <div class="flex items-center gap-4 mb-4">
+                        <div class="w-12 h-12 rounded-2xl bg-sbGreen text-white flex items-center justify-center font-black text-xl">
+                            WHO
+                        </div>
+                        <h3 class="text-xl font-bold font-serif text-sbDarkGreen">品牌為誰存在？</h3>
+                    </div>
+                    <p class="text-gray-600 text-sm leading-relaxed">
+                        為<strong>追求生活品質、渴望短暫放鬆、需要優質辦公或社交空間</strong>的都市人群與咖啡愛好者（包含上班族、學生、數位遊牧民族及自由職業者）存在。
+                    </p>
+                </div>
+
+                <!-- What -->
+                <div class="reveal-on-scroll bg-white p-8 rounded-3xl shadow-sm border border-gray-200 hover:border-sbGreen transition-all" style="transition-delay: 100ms;">
+                    <div class="flex items-center gap-4 mb-4">
+                        <div class="w-12 h-12 rounded-2xl bg-sbGold text-sbDarkGreen flex items-center justify-center font-black text-xl">
+                            WHAT
+                        </div>
+                        <h3 class="text-xl font-bold font-serif text-sbDarkGreen">品牌提供什麼產品或服務？</h3>
+                    </div>
+                    <p class="text-gray-600 text-sm leading-relaxed">
+                        提供<strong>高品質的手作咖啡飲品與美味餐點</strong>，以及一個<strong>舒適、友善且具備獨特氛圍的「第三空間」實體與數位體驗</strong>。
+                    </p>
+                </div>
+
+                <!-- Why -->
+                <div class="reveal-on-scroll bg-white p-8 rounded-3xl shadow-sm border border-gray-200 hover:border-sbGreen transition-all" style="transition-delay: 200ms;">
+                    <div class="flex items-center gap-4 mb-4">
+                        <div class="w-12 h-12 rounded-2xl bg-sbDarkGreen text-white flex items-center justify-center font-black text-xl">
+                            WHY
+                        </div>
+                        <h3 class="text-xl font-bold font-serif text-sbDarkGreen">為什麼需要這個品牌？</h3>
+                    </div>
+                    <p class="text-gray-600 text-sm leading-relaxed">
+                        在忙碌緊張的現代生活中，人們需要一個<strong>機能放下壓力、享受專屬時光或與他人連結的避風港</strong>。星巴克不只是賣咖啡，更傳遞生活風格。
+                    </p>
+                </div>
+
+                <!-- How -->
+                <div class="reveal-on-scroll bg-white p-8 rounded-3xl shadow-sm border border-gray-200 hover:border-sbGreen transition-all" style="transition-delay: 300ms;">
+                    <div class="flex items-center gap-4 mb-4">
+                        <div class="w-12 h-12 rounded-2xl bg-sbLightGreen text-white flex items-center justify-center font-black text-xl">
+                            HOW
+                        </div>
+                        <h3 class="text-xl font-bold font-serif text-sbDarkGreen">品牌如何與消費者溝通？</h3>
+                    </div>
+                    <p class="text-gray-600 text-sm leading-relaxed">
+                        透過<strong>門市夥伴溫暖互動（杯上手寫字）、精心設計的五感環境、星禮程 App 數位生態系統</strong>以及節慶行銷與 ESG 永續行動。
+                    </p>
+                </div>
+            </div>
+
+            <!-- 5-Sense Experience Highlights -->
+            <div class="reveal-on-scroll bg-sbDarkGreen text-white p-8 sm:p-12 rounded-3xl shadow-xl">
+                <h3 class="text-2xl font-serif font-bold text-center mb-8 text-sbGold">星巴克門市的「五感體驗」</h3>
+                <div class="grid grid-cols-2 sm:grid-cols-5 gap-6 text-center">
+                    <div class="space-y-2">
+                        <div class="text-3xl text-sbGold"><i class="fa-solid fa-wind"></i></div>
+                        <h4 class="font-bold text-sm">香氣 (Scent)</h4>
+                        <p class="text-xs text-sbCream/70">現磨咖啡豆的純粹香氣</p>
+                    </div>
+                    <div class="space-y-2">
+                        <div class="text-3xl text-sbGold"><i class="fa-solid fa-music"></i></div>
+                        <h4 class="font-bold text-sm">音樂 (Sound)</h4>
+                        <p class="text-xs text-sbCream/70">精選全球爵士與輕快樂音</p>
+                    </div>
+                    <div class="space-y-2">
+                        <div class="text-3xl text-sbGold"><i class="fa-solid fa-lightbulb"></i></div>
+                        <h4 class="font-bold text-sm">燈光 (Lighting)</h4>
+                        <p class="text-xs text-sbCream/70">溫暖木質調與柔和採光</p>
+                    </div>
+                    <div class="space-y-2">
+                        <div class="text-3xl text-sbGold"><i class="fa-solid fa-heart-pulse"></i></div>
+                        <h4 class="font-bold text-sm">手作 (Connection)</h4>
+                        <p class="text-xs text-sbCream/70">夥伴親切的招呼與祝福</p>
+                    </div>
+                    <div class="col-span-2 sm:col-span-1 space-y-2">
+                        <div class="text-3xl text-sbGold"><i class="fa-solid fa-mobile-screen"></i></div>
+                        <h4 class="font-bold text-sm">數位 (Digital)</h4>
+                        <p class="text-xs text-sbCream/70">星禮程行動點餐便利性</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact & Call to Action Section -->
+    <section id="contact" class="py-24 bg-sbDarkGreen text-white relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                
+                <!-- Left CTA Content -->
+                <div class="lg:col-span-6 space-y-6 reveal-on-scroll">
+                    <span class="text-sbGold font-bold text-sm tracking-widest uppercase">Starbucks Rewards</span>
+                    <h2 class="text-3xl sm:text-5xl font-serif font-black leading-tight">
+                        加入星禮程<br><span class="text-sbGold">開啟專屬美味旅程</span>
+                    </h2>
+                    <p class="text-sbCream/80 text-base leading-relaxed">
+                        透過 Starbucks® Rewards 星禮程 App，隨時隨地輕鬆預約點餐、累積星星兌換免費飲品與專屬生日禮遇。
+                    </p>
+
+                    <div class="flex flex-wrap gap-4 pt-4">
+                        <!-- Button Style 1 (CTA) -->
+                        <button onclick="handleSubscribeAlert('星禮程會員註冊')" class="btn-ripple bg-sbGold text-sbDarkGreen font-bold px-8 py-4 rounded-full shadow-lg">
+                            立即下載 App 註冊 <i class="fa-solid fa-download ml-2"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Right Interactive Store Locator / Newsletter Form Card -->
+                <div class="lg:col-span-6 bg-white text-sbTextDark p-8 sm:p-10 rounded-3xl shadow-2xl reveal-on-scroll">
+                    <h3 class="text-2xl font-serif font-bold text-sbDarkGreen mb-2">尋找附近的星巴克門市</h3>
+                    <p class="text-gray-500 text-sm mb-6">輸入您所在的區域，開啟「第三空間」體驗。</p>
+
+                    <form onsubmit="handleStoreSearch(event)" class="space-y-4">
+                        <div>
+                            <label class="block text-xs font-bold text-gray-700 uppercase mb-2">城市 / 區域或地址</label>
+                            <div class="relative">
+                                <input type="text" id="store-input" required placeholder="例如：台北市信義區 或 台中市西區" class="w-full pl-11 pr-4 py-3.5 bg-sbCream/50 border border-gray-200 rounded-xl focus:outline-none focus:border-sbGreen focus:ring-1 focus:ring-sbGreen text-sm">
+                                <i class="fa-solid fa-location-dot absolute left-4 top-1/2 -translate-y-1/2 text-sbGreen"></i>
+                            </div>
+                        </div>
+
+                        <!-- Button Style 2 inside Form -->
+                        <button type="submit" class="w-full btn-glow-outline bg-sbGreen text-white font-bold py-3.5 rounded-xl transition-all text-sm flex items-center justify-center gap-2">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                            <span>搜尋門市據點</span>
+                        </button>
+                    </form>
+
+                    <div id="search-result" class="hidden mt-4 p-4 bg-sbCream rounded-xl text-xs text-sbDarkGreen font-medium"></div>
+
+                    <!-- Newsletter Divider -->
+                    <div class="my-6 border-t border-gray-200"></div>
+
+                    <div>
+                        <h4 class="font-bold text-sm text-sbDarkGreen mb-2">訂閱星巴克最新消息與優惠</h4>
+                        <div class="flex gap-2">
+                            <input type="email" id="email-input" placeholder="輸入您的 Email" class="flex-1 px-4 py-2.5 bg-sbCream/50 border border-gray-200 rounded-xl text-xs focus:outline-none focus:border-sbGreen">
+                            <button onclick="handleEmailSubscribe()" class="bg-sbDarkGreen hover:bg-sbGreen text-white text-xs font-bold px-4 py-2.5 rounded-xl transition-colors">
+                                訂閱
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-sbDarkGreen/95 text-white/70 py-12 border-t border-white/10 text-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row items-center justify-between gap-6 pb-8 border-b border-white/10">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-full bg-sbGreen flex items-center justify-center">
+                        <i class="fa-solid fa-mug-saucer text-white"></i>
+                    </div>
+                    <span class="font-serif font-bold text-white text-lg">STARBUCKS COFFEE</span>
+                </div>
+
+                <!-- Social Icons -->
+                <div class="flex space-x-6 text-xl">
+                    <a href="#" class="hover:text-sbGold transition-colors" aria-label="Facebook"><i class="fa-brands fa-facebook"></i></a>
+                    <a href="#" class="hover:text-sbGold transition-colors" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="#" class="hover:text-sbGold transition-colors" aria-label="Line"><i class="fa-brands fa-line"></i></a>
+                    <a href="#" class="hover:text-sbGold transition-colors" aria-label="Youtube"><i class="fa-brands fa-youtube"></i></a>
+                </div>
+            </div>
+
+            <div class="pt-8 flex flex-col sm:flex-row items-center justify-between text-xs text-white/50 gap-4">
+                <p>© 2026 Starbucks Coffee Company. All rights reserved. 僅供品牌展演與學習展示使用。</p>
+                <div class="flex space-x-4">
+                    <a href="#" class="hover:underline">隱私權政策</a>
+                    <a href="#" class="hover:underline">使用條款</a>
+                    <a href="#" class="hover:underline">門市資訊</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript Section -->
+    <script>
+        // 1. Dynamic Typewriter Effect Logic for Hero Subtitle
+        const typewriterPhrases = [
+            "每一杯咖啡，遞送一份溫暖對話。",
+            "打造您專屬的「第三空間」體驗。",
+            "嚴選 100% 阿拉比卡優質豆。",
+            "探索人際連結與精緻生活風格。"
+        ];
+        let phraseIndex = 0;
+        let charIndex = 0;
+        let isDeleting = false;
+        const typewriterElement = document.getElementById('typewriter');
+
+        function typeLoop() {
+            const currentPhrase = typewriterPhrases[phraseIndex];
+            
+            if (isDeleting) {
+                typewriterElement.textContent = currentPhrase.substring(0, charIndex - 1);
+                charIndex--;
+            } else {
+                typewriterElement.textContent = currentPhrase.substring(0, charIndex + 1);
+                charIndex++;
+            }
+
+            let typeSpeed = isDeleting ? 40 : 80;
+
+            if (!isDeleting && charIndex === currentPhrase.length) {
+                typeSpeed = 2200; // Pause at end
+                isDeleting = true;
+            } else if (isDeleting && charIndex === 0) {
+                isDeleting = false;
+                phraseIndex = (phraseIndex + 1) % typewriterPhrases.length;
+                typeSpeed = 500;
+            }
+
+            setTimeout(typeLoop, typeSpeed);
+        }
+
+        // 2. Intersection Observer for Scroll Animations (TEXT ANIMATION 3)
+        document.addEventListener('DOMContentLoaded', () => {
+            // Start Typewriter
+            typeLoop();
+
+            // Mobile Menu Toggle
+            const menuBtn = document.getElementById('menu-btn');
+            const mobileMenu = document.getElementById('mobile-menu');
+            if (menuBtn && mobileMenu) {
+                menuBtn.addEventListener('click', () => {
+                    mobileMenu.classList.toggle('hidden');
+                });
+            }
+
+            // Scroll Reveal Observer
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.15
+            };
+
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, observerOptions);
+
+            document.querySelectorAll('.reveal-on-scroll').forEach(element => {
+                observer.observe(element);
+            });
+        });
+
+        // 3. Interactive UI Handlers
+        function handleStoreSearch(event) {
+            event.preventDefault();
+            const input = document.getElementById('store-input').value;
+            const resultBox = document.getElementById('search-result');
+            resultBox.classList.remove('hidden');
+            resultBox.innerHTML = `<i class="fa-solid fa-spinner animate-spin mr-2"></i> 正在為您搜尋「${input}」附近的星巴克門市...`;
+            
+            setTimeout(() => {
+                resultBox.innerHTML = `<i class="fa-solid fa-circle-check text-sbGreen mr-2"></i> 已為您找到【${input}】周邊 3 家優質門市！可於 Starbucks App 啟用導航與預約點餐。`;
+            }, 1200);
+        }
+
+        function handleEmailSubscribe() {
+            const email = document.getElementById('email-input').value;
+            if(!email || !email.includes('@')) {
+                alertModal('請輸入有效的電子郵件地址！');
+                return;
+            }
+            alertModal(`感謝您的訂閱！最新星巴克優惠已發送至：${email}`);
+            document.getElementById('email-input').value = '';
+        }
+
+        function handleSubscribeAlert(action) {
+            alertModal(`已為您跳轉至【${action}】專區！請下載星巴克 App 體驗完整會員服務。`);
+        }
+
+        // Custom Custom Styled Modal instead of browser alert()
+        function alertModal(message) {
+            const modal = document.createElement('div');
+            modal.className = 'fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-fade-in';
+            modal.innerHTML = `
+                <div class="bg-white rounded-3xl p-8 max-w-sm w-full text-center shadow-2xl border border-gray-100 transform transition-all">
+                    <div class="w-16 h-16 bg-sbGreen/10 text-sbGreen rounded-full flex items-center justify-center mx-auto mb-4 text-2xl">
+                        <i class="fa-solid fa-mug-saucer"></i>
+                    </div>
+                    <h3 class="font-serif font-bold text-xl text-sbDarkGreen mb-2">星巴克 Starbucks</h3>
+                    <p class="text-sm text-gray-600 mb-6 leading-relaxed">${message}</p>
+                    <button onclick="this.closest('.fixed').remove()" class="w-full bg-sbGreen hover:bg-sbDarkGreen text-white font-bold py-3 rounded-xl transition-colors text-sm">
+                        確定
+                    </button>
+                </div>
+            `;
+            document.body.appendChild(modal);
+        }
+    </script>
+</body>
+</html>
